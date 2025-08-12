@@ -1,26 +1,22 @@
 import os
 import django
 
-# --- Setup Django environment ---
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project_name.settings')  # Change this
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
 django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
 
-
-# --- Query 1: All books by a specific author ---
+# All books by a specific author
 author_name = "George Orwell"
-books_by_author = Book.objects.filter(author__name=author_name)
+author = Author.objects.get(name=author_name) 
+books_by_author = Book.objects.filter(author=author) 
 
 print(f"Books by {author_name}:")
 if books_by_author.exists():
     for book in books_by_author:
         print(f" - {book.title}")
-else:
-    print("No books found for this author.")
 
-
-# --- Query 2: List all books in a library ---
+# List all books in a library 
 library_name = "Central Library"
 try:
     library = Library.objects.get(name=library_name)
@@ -34,7 +30,7 @@ except Library.DoesNotExist:
     print(f"\nLibrary '{library_name}' not found.")
 
 
-# --- Query 3: Retrieve the librarian for a library ---
+# Retrieve the librarian for a library
 try:
     library = Library.objects.get(name=library_name)
     librarian = library.librarian
