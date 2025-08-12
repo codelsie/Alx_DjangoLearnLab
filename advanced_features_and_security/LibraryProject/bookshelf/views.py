@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 from .models import Book
 from django.shortcuts import redirect
-from .forms import BookSearchForm
+from .forms import ExampleForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 
@@ -13,7 +13,7 @@ def book_list(request):
 
 @require_http_methods(["GET", "POST"])
 def search_books(request):
-    form = BookSearchForm(request.GET or None)
+    form = ExampleForm(request.GET or None)
     books = Book.objects.none()
     if form.is_valid():
         q = form.cleaned_data.get('q')
