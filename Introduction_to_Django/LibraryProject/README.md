@@ -1,1 +1,1 @@
-No requirement specified
+# Django LibraryProject
