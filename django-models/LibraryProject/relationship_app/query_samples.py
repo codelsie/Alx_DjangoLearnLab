@@ -11,31 +11,12 @@ author_name = "George Orwell"
 author = Author.objects.get(name=author_name) 
 books_by_author = Book.objects.filter(author=author) 
 
-print(f"Books by {author_name}:")
-if books_by_author.exists():
-    for book in books_by_author:
-        print(f" - {book.title}")
-
 # List all books in a library 
 library_name = "Central Library"
-try:
-    library = Library.objects.get(name=library_name)
-    print(f"\nBooks in {library_name}:")
-    if library.books.exists():
-        for book in library.books.all():
-            print(f" - {book.title}")
-    else:
-        print("No books in this library.")
-except Library.DoesNotExist:
-    print(f"\nLibrary '{library_name}' not found.")
+library = Library.objects.get(name=library_name)
 
+for book in library.books.all():
+    print(f" - {book.title}")
 
 # Retrieve the librarian for a library
-try:
-    library = Library.objects.get(name=library_name)
-    librarian = library.librarian
-    print(f"\nLibrarian for {library_name}: {librarian.name}")
-except Library.DoesNotExist:
-    print(f"\nLibrary '{library_name}' not found.")
-except Librarian.DoesNotExist:
-    print(f"\nNo librarian assigned to {library_name}.")
+librarian = Librarian.objects.get(library=library)
